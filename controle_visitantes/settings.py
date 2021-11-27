@@ -37,11 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'usuarios',
+    
 ]
 
 INSTALLED_APPS += [
+    'widget_tweaks',
+]
+
+INSTALLED_APPS += [
+    'usuarios',
     'porteiros',
+    'visitantes',
 ]
 
 MIDDLEWARE = [
