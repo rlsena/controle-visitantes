@@ -4,6 +4,20 @@ from django.db import models
 
 class Visitante(models.Model):
 
+    STATUS_VISITANTE = [
+        ("AGUARDANDO","Aguardando Autorização"),
+        ("EM_VISITA", "Visita em andamento"),
+        ("FINALIZADO","Visita finalizada")
+
+    ]
+
+    status = models.CharField(
+        verbose_name="status",
+        max_length=10,
+        choices=STATUS_VISITANTE,
+        default="AGUARDANDO"
+    )
+
     nome_completo=models.CharField(
         verbose_name="Nome Completo", 
         max_length=194)
@@ -52,6 +66,45 @@ class Visitante(models.Model):
         verbose_name="Porteiro responsável pelo registro",
         on_delete=models.PROTECT
     )
+
+
+    def get_horario_saida(self):
+        if self.horario_saida:
+            return self.horario_saida
+        
+        return "Horario de saída não registrado"
+    
+    
+    def get_horario_autorizacao(self):
+        if self.horario_autorizacao:
+            return self.horario_autorizacao
+        
+        return "Visitante aguardando autorização"
+    
+    def get_morador_responsavel(self):
+        if self.morador_responsavel:
+            return self.morador_responsavel
+        
+        return "Visitante aguardando autorização"
+
+    def get_placa_veiculo(self):
+        if self.placa_veiculo:
+            return self.placa_veiculo
+        
+        return "Veículo não registrado"
+
+    def get_cpf(self):
+        if self.cpf:
+            cpf = str(self.cpf)
+
+            cpf1 = cpf[0:3]
+            cpf2 = cpf[3:6]
+            cpf3 = cpf[6:9]
+            cpf4 = cpf[9:]
+
+            cpf_formatado = f"{cpf1}.{cpf2}.{cpf3}-{cpf4}"
+
+            return cpf_formatado
 
     class Meta:
         verbose_name="Visitante",
